@@ -1,5 +1,8 @@
 import java.io.File;
 import java.util.Scanner;
+
+import EvolutionOfTrust.List;
+
 import java.io.IOException;
 
 public class ManipularArquivo {
