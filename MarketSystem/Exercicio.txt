@@ -46,27 +46,27 @@ Menu Principal: O menu principal deve apresentar as seguintes opções:
 • Pedidos de Compra
 • Sair
 
-Cadastro de Clientes:
+Cadastro de Clientes: OK
 • Incluir novo cliente
 • Consultar cliente
 • Atualizar cliente
 • Excluir cliente
 
-Cadastro de Atendentes de Caixa:
+Cadastro de Atendentes de Caixa: OK
 • Incluir novo atendente
 • Consultar atendente
 • Atualizar atendente
 • Excluir atendente
 
-Opções de Venda:
+Opções de Venda: OK
 • Iniciar nova venda
 • Adicionar produtos à venda
 • Finalizar venda
 
-Histórico de Compras:
+Histórico de Compras: OK
 • Consultar histórico de compras de um cliente
 
-Histórico de Vendas:
+Histórico de Vendas: OK
 • Consultar histórico de vendas de um caixa
 
 Gerenciamento de Estoque:

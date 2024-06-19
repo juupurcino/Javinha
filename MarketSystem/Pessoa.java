@@ -1,16 +1,9 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 public abstract class Pessoa {
     
     private String nome;
     private String endereco;
     private String telefone;
     private String cpf;
-    private static List<Pessoa> listaClientes = new ArrayList<>();
-    private static List<Pessoa> listaFuncionarios = new ArrayList<>();
-
 
     // Construtor
     public Pessoa(String nome, String endereco, String telefone, String cpf) {
@@ -20,14 +13,36 @@ public abstract class Pessoa {
         this.cpf = cpf;
     }
 
-    public static void addCliente(String nome, String endereco, String telefone, String cpf, Date data_nasc) {
-        Cliente novoCliente = new Cliente(nome, endereco, telefone, cpf, data_nasc);
-        listaClientes.add(novoCliente);
+    // Getters e setters
+    public String getNome() {
+        return nome;
     }
-    
-    public static void addCaixa(String nome, String endereco, String telefone, String cpf, Date dataAdmissao, String cargo, int idCaixa) {
-        AtendenteCaixa novoCaixa = new AtendenteCaixa(nome, endereco, telefone, cpf, dataAdmissao, cargo, idCaixa);
-        listaFuncionarios.add(novoCaixa); // Aqui, corrigimos para adicionar à lista de funcionários
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,12 +11,11 @@ public class Venda {
     private float valorTotal;
     private FormaPagamento formaPagamento;
     private Cliente cliente;
-    private AtendendeCaixa caixa;
+    private AtendenteCaixa caixa;
     private List<Produto> produtos;
     
     public Venda(int idVenda, Date data, float valorTotal, FormaPagamento formaPagamento, Cliente cliente,
-            AtendendeCaixa caixa, List<Produto> produtos) {
-       
+                 AtendenteCaixa caixa, List<Produto> produtos) {
         this.idVenda = idVenda;
         this.data = data;
         this.valorTotal = valorTotal;
@@ -25,8 +25,23 @@ public class Venda {
         this.produtos = produtos;
     }
     
-    void calcularTotal(){
+    public static Venda iniciarNovaVenda(int idVenda, Date data, FormaPagamento formaPagamento, Cliente cliente,
+                                         AtendenteCaixa caixa) {
         
+        return new Venda(idVenda, data, 0, formaPagamento, cliente, caixa, new ArrayList<>());
+                                            
+    }
+
+    public void adicionarProduto(Produto produto) {
+        this.produtos.add(produto);
+    }
+    
+    public void calcularTotal() {
+        float total = 0;
+        for (Produto produto : produtos) {
+            total += produto.getPrecoUn(); // Usando getPrecoUn de Produto
+        }
+        this.valorTotal = total;
     }
     
     public int getIdVenda() {
@@ -69,15 +84,14 @@ public class Venda {
         this.cliente = cliente;
     }
 
-    public AtendendeCaixa getCaixa() {
+    public AtendenteCaixa getCaixa() {
         return caixa;
     }
 
-    public void setCaixa(AtendendeCaixa caixa) {
+    public void setCaixa(AtendenteCaixa caixa) {
         this.caixa = caixa;
     }
 
-    
     public List<Produto> getProdutos() {
         return produtos;
     }
@@ -85,6 +99,4 @@ public class Venda {
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
     }
-
-
 }
