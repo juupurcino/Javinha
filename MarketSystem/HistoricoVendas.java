@@ -4,15 +4,15 @@ import java.util.List;
 public class HistoricoVendas {
 
     private AtendenteCaixa caixa;
-    private List<Venda> vendas;
+    private static List<Venda> vendas;
 
     public HistoricoVendas(AtendenteCaixa caixa) {
         this.caixa = caixa;
-        this.vendas = new ArrayList<>();
+        vendas = new ArrayList<>();
     }
 
-    public void adicionarVenda(Venda venda) {
-        this.vendas.add(venda);
+    public static void adicionarVenda(Venda venda) {
+        vendas.add(venda);
     }
 
     public List<Venda> getVendas() {

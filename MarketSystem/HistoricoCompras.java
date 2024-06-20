@@ -4,15 +4,16 @@ import java.util.List;
 public class HistoricoCompras {
    
     private Cliente cliente;
-    private List<Venda> compras;
+    private static List<Venda> compras;
 
     public HistoricoCompras(Cliente cliente) {
         this.cliente = cliente;
-        this.compras = new ArrayList<>();
+        compras = new ArrayList<>();
     }
 
-    public void adicionarCompra(Venda compra) {
-        this.compras.add(compra);
+    public static void adicionarCompra(Venda compra) {
+        compras.add(compra);
+
     }
 
     public List<Venda> getCompras() {

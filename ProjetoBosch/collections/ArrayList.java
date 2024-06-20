@@ -5,6 +5,9 @@ public class ArrayList <T> extends List <T>{
 
     private T[] data;
 
+    /**
+     * 
+     */
     public ArrayList(){
 
         data = (t[])(new Object[10]);

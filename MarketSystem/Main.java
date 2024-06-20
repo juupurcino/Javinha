@@ -2,7 +2,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 import FormasPagamento.*;
 
@@ -452,11 +451,85 @@ public class Main{
         System.out.println("ID da Venda: " + vendaEmAndamento.getIdVenda());
         System.out.println("Data da Venda: " + vendaEmAndamento.getData());
         System.out.println("Valor Total: " + vendaEmAndamento.getValorTotal());
+
+        HistoricoCompras.adicionarCompra(vendaEmAndamento);
+        HistoricoVendas.adicionarVenda(vendaEmAndamento);
     
         // Limpar venda em andamento
         vendaEmAndamento = null;
         System.out.println("Venda finalizada com sucesso!");
     }
+
+    public static void menuGerenciamentoEstoque() {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        do {
+            System.out.print("\n--------- MENU GERENCIAMENTO DE ESTOQUE -----------\n\n" +
+                             "1. Cadastrar novo produto\n" +
+                             "2. Consultar estoque de um produto\n" +
+                             "3. Atualizar estoque de um produto\n" +
+                             "4. Excluir produto\n" +
+                             "5. Voltar ao Menu Principal\n\n" +
+                             "Escolha uma opção: ");
+            
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    cadastrarNovoProduto(scanner);
+                    break;
+                case 2:
+                    consultarEstoqueProduto(scanner);
+                    break;
+                case 3:
+                    atualizarEstoqueProduto(scanner);
+                    break;
+                case 4:
+                    removerProduto(scanner);
+                    break;
+                case 5:
+                    System.out.println("\nVoltando ao Menu Principal...");
+                    break;
+                default:
+                    System.out.println("\nOpção inválida. Tente novamente.");
+            }
+        } while (opcao != 5);
+
+        scanner.close();
+    }
+
+    private static void cadastrarNovoProduto(Scanner scanner) {
+        System.out.print("\nCadastro de Produto\n");
+        System.out.print("Codigo: ");
+        String codigo = scanner.nextLine();
+        System.out.print("Nome: ");
+        String nome = scanner.nextLine();
+        System.out.print("Descricao: ");
+        String descricao = scanner.nextLine();
+        System.out.print("Preco unidade: ");
+        float precoUn = scanner.nextFloat();
+        System.out.print("Data de Admissao (dd/MM/yyyy): ");
+        String dataAdmissaoStr = scanner.nextLine();
+        System.out.print("Cargo: ");
+        String cargo = scanner.nextLine();
+        System.out.print("ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date dataAdmissao;
+        try {
+            dataAdmissao = sdf.parse(dataAdmissaoStr);
+            AtendenteCaixa.addCaixa(nome, endereco, telefone, cpf, dataAdmissao, cargo, id);
+            System.out.println("\nNovo caixa cadastrado com sucesso!");
+        } catch (ParseException e) {
+            System.out.println("\nErro ao converter data. Formato inválido. Tente novamente.");
+        }
+    }
+
+    
     
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
