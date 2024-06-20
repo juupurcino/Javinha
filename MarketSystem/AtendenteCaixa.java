@@ -50,9 +50,9 @@ public class AtendenteCaixa extends Pessoa {
         listaFuncionarios.add(novoCaixa); 
     }
 
-    public static void popCaixa(String cpf) {
+    public static void popCaixa(int idCaixa) {
         for (int i = 0; i < listaFuncionarios.size(); i++) {
-            if (listaFuncionarios.get(i).getCpf().equals(cpf)) {
+            if (listaFuncionarios.get(i).getIdCaixa() == idCaixa) {
                 listaFuncionarios.remove(i);
                 break;
             }
@@ -61,7 +61,7 @@ public class AtendenteCaixa extends Pessoa {
 
     public static void atualizarCaixa(String nome, String endereco, String telefone, String cpf, Date dataAdmissao, String cargo, int idCaixa) {
         for (AtendenteCaixa caixa : listaFuncionarios) {
-            if (caixa.getCpf().equals(cpf)) {
+            if (caixa.getIdCaixa() == idCaixa) {
                 caixa.setNome(nome);
                 caixa.setEndereco(endereco);
                 caixa.setTelefone(telefone);
@@ -73,9 +73,9 @@ public class AtendenteCaixa extends Pessoa {
         }
     }
 
-    public static AtendenteCaixa consultarCaixa(String cpf) {
+    public static AtendenteCaixa consultarCaixa(int idCaixa) {
         for (AtendenteCaixa caixa : listaFuncionarios) {
-            if (caixa.getCpf().equals(cpf)) {
+            if (caixa.getIdCaixa() == idCaixa) {
                 return caixa;
             }
         }
