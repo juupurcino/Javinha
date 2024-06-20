@@ -3,28 +3,28 @@ import java.util.List;
 
 public class Estoque {
 
-    private List<Produto> produtos;
+    private static List<Produto> produtos;
 
     public Estoque() {
-        this.produtos = new ArrayList<>();
+        produtos = new ArrayList<>();
     }
 
-    public void cadastrarNovoProduto(Produto produto) {
-        this.produtos.add(produto);
+    public static void cadastrarNovoProduto(Produto produto) {
+        produtos.add(produto);
     }
 
-    public Produto consultarEstoque(String codigo) {
+    public Produto consultarEstoque(int codigoConsulta) {
         for (Produto produto : produtos) {
-            if (produto.getCodigo().equals(codigo)) {
+            if (produto.getCodigo() == codigoConsulta) {
                 return produto;
             }
         }
         return null;
     }
 
-    public boolean atualizarEstoque(String codigo, int novaQuantidade) {
+    public boolean atualizarEstoque(int codigoProduto, int novaQuantidade) {
         for (Produto produto : produtos) {
-            if (produto.getCodigo().equals(codigo)) {
+            if (produto.getCodigo() == codigoProduto) {
                 produto.setQtdEstoque(novaQuantidade);
                 return true;
             }
@@ -32,9 +32,9 @@ public class Estoque {
         return false;
     }
 
-    public boolean excluirProduto(String codigo) {
+    public boolean excluirProduto(int codigo) {
         for (Produto produto : produtos) {
-            if (produto.getCodigo().equals(codigo)) {
+            if (produto.getCodigo() == codigo) {
                 produtos.remove(produto);
                 return true;
             }

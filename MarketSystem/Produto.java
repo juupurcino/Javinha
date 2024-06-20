@@ -2,31 +2,27 @@ import java.util.List;
 
 public class Produto {
     
-    private String codigo;
+    private int codigo;
     private String nome;
     private String descricao;
     private float precoUn;
     private int qtdEstoque;
-    private Fornecedor fornecedorPrincipal;
-    private List<Fornecedor> fornecedoresAlternativos;
+
     
-    public Produto(String codigo, String nome, String descricao, float precoUn, int qtdEstoque, 
-                   Fornecedor fornecedorPrincipal, List<Fornecedor> fornecedoresAlternativos) {
+    public Produto(int codigo, String nome, String descricao, float precoUn, int qtdEstoque) {
         this.codigo = codigo;
         this.nome = nome;
         this.descricao = descricao;
         this.precoUn = precoUn;
         this.qtdEstoque = qtdEstoque;
-        this.fornecedorPrincipal = fornecedorPrincipal;
-        this.fornecedoresAlternativos = fornecedoresAlternativos;
     }
 
     // Getters e setters
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
 
@@ -62,19 +58,4 @@ public class Produto {
         this.qtdEstoque = qtdEstoque;
     }
 
-    public Fornecedor getFornecedorPrincipal() {
-        return fornecedorPrincipal;
-    }
-
-    public void setFornecedorPrincipal(Fornecedor fornecedorPrincipal) {
-        this.fornecedorPrincipal = fornecedorPrincipal;
-    }
-
-    public List<Fornecedor> getFornecedoresAlternativos() {
-        return fornecedoresAlternativos;
-    }
-
-    public void setFornecedoresAlternativos(List<Fornecedor> fornecedoresAlternativos) {
-        this.fornecedoresAlternativos = fornecedoresAlternativos;
-    }
 }

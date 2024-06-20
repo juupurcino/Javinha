@@ -1,9 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Fornecedor {
-    
+
     private String nome;
     private String endereco;
     private String telefone;
     private String email;
+    private static List<Fornecedor> listaFornecedores = new ArrayList<>();
 
     // Construtor vazio
     public Fornecedor() {
@@ -48,5 +52,22 @@ public class Fornecedor {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public static List<Fornecedor> getListaFornecedores() {
+        return listaFornecedores;
+    }
+
+    public static void adicionarFornecedor(Fornecedor fornecedor) {
+        listaFornecedores.add(fornecedor);
+    }
+
+    public static Fornecedor consultarFornecedor(String nome) {
+        for (Fornecedor fornecedor : listaFornecedores) {
+            if (fornecedor.getNome().equalsIgnoreCase(nome)) {
+                return fornecedor;
+            }
+        }
+        return null;
     }
 }

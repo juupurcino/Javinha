@@ -5,15 +5,13 @@ public class PedidoCompra {
     private int idPedido;
     private Fornecedor fornecedor;
     private Produto produto;
-    private int quantidade;
     private Date dataEntrega;
     
     // Construtor
-    public PedidoCompra(int idPedido, Fornecedor fornecedor, Produto produto, int quantidade, Date dataEntrega) {
+    public PedidoCompra(int idPedido, Fornecedor fornecedor, Produto produto, Date dataEntrega) {
         this.idPedido = idPedido;
         this.fornecedor = fornecedor;
         this.produto = produto;
-        this.quantidade = quantidade;
         this.dataEntrega = dataEntrega;
     }
 
@@ -41,15 +39,7 @@ public class PedidoCompra {
     public void setProduto(Produto produto) {
         this.produto = produto;
     }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
+    
     public Date getDataEntrega() {
         return dataEntrega;
     }
