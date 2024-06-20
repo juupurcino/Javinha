@@ -1,6 +1,8 @@
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import FormasPagamento.*;
 
@@ -295,7 +297,7 @@ public class Main{
         AtendenteCaixa.popCaixa(idRemocao);
         System.out.println("\nCaixa removido com sucesso!");
     }
-    
+
     private static Venda vendaEmAndamento;
     private static Estoque estoque;
 
@@ -433,6 +435,7 @@ public class Main{
         }
 
         System.out.println("Produto adicionado à venda com sucesso!");
+        
     }
 
     public static void finalizarVenda() {
@@ -440,18 +443,16 @@ public class Main{
             System.out.println("Nenhuma venda em andamento ou nenhum produto adicionado.");
             return;
         }
-
+    
         // Calcular o valor total da venda
         vendaEmAndamento.calcularTotal();
-
+    
         // Exibir informações da venda
         System.out.println("\nResumo da Venda:");
         System.out.println("ID da Venda: " + vendaEmAndamento.getIdVenda());
         System.out.println("Data da Venda: " + vendaEmAndamento.getData());
         System.out.println("Valor Total: " + vendaEmAndamento.getValorTotal());
-
-        // Outras operações necessárias ao finalizar a venda
-
+    
         // Limpar venda em andamento
         vendaEmAndamento = null;
         System.out.println("Venda finalizada com sucesso!");

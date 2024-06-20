@@ -24,7 +24,6 @@ public class HistoricoCompras {
     }
     
     public static HistoricoCompras consultarHistoricoCompras(Cliente cliente, List<HistoricoCompras> historicos) {
-        
         for (HistoricoCompras historico : historicos) {
             if (historico.getCliente().equals(cliente)) {
                 return historico;
@@ -32,4 +31,5 @@ public class HistoricoCompras {
         }
         return null;
     }
+
 }
