@@ -9,6 +9,7 @@ public class Main{
     
     private static Venda vendaEmAndamento;
     private static Estoque estoque = new Estoque();
+
    
     // Menu principal com as opções
     public static void menuPrincipal(){
@@ -480,7 +481,7 @@ public class Main{
 
         HistoricoCompras.adicionarCompra(vendaEmAndamento);
         HistoricoVendas.adicionarVenda(vendaEmAndamento);
-
+        
         vendaEmAndamento = null;
         System.out.println("Venda finalizada com sucesso!");
     }
@@ -711,6 +712,40 @@ public class Main{
         System.out.println("Fornecedor: " + fornecedorConsultado.getNome());
         System.out.println("Produto: " + produto.getNome());
         System.out.println("Data de Entrega: " + sdf.format(dataEntrega));
+    }
+
+    public static void menuHistoricoCompras(){
+
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        do {
+            System.out.print("\n--------- MENU HISTÓRICO DE COMPRAS -----------\n\n" +
+                             "1. Consultar historico de compras\n" +
+                             "2. Voltar ao Menu Principal\n\n" +
+                             "Escolha uma opção: ");
+            
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    consultarHistoricoCompras(scanner);
+                    break;
+                case 2:
+                    System.out.println("\nVoltando ao Menu Principal...");
+                    break;
+                default:
+                    System.out.println("\nOpção inválida. Tente novamente.");
+            }
+        } while (opcao != 5);
+
+        scanner.close();
+    }
+
+    public static void consultarHistoricoCompras(Scanner scanner){
+
+
     }
 
     public static void main(String[] args) {
