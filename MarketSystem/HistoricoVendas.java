@@ -4,15 +4,15 @@ import java.util.List;
 public class HistoricoVendas {
 
     private AtendenteCaixa caixa;
-    private static List<Venda> vendas;
+    private List<Venda> vendas;
 
     public HistoricoVendas(AtendenteCaixa caixa) {
         this.caixa = caixa;
-        vendas = new ArrayList<>();
+        this.vendas = new ArrayList<>();
     }
 
-    public static void adicionarVenda(Venda venda) {
-        vendas.add(venda);
+    public void adicionarVenda(Venda venda) {
+        this.vendas.add(venda);
     }
 
     public List<Venda> getVendas() {
@@ -24,7 +24,6 @@ public class HistoricoVendas {
     }
 
     public static HistoricoVendas consultarHistoricoVendas(AtendenteCaixa caixa, List<HistoricoVendas> historicos) {
-        
         for (HistoricoVendas historico : historicos) {
             if (historico.getCaixa().equals(caixa)) {
                 return historico;

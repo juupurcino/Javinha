@@ -2,13 +2,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import FormasPagamento.*;
 
 public class Main{
-    
-    private static Venda vendaEmAndamento;
+
     private static Estoque estoque = new Estoque();
+    // Variáveis de classe para armazenar os históricos
+    private static List<HistoricoCompras> historicosCompras = new ArrayList<>();
+    private static List<HistoricoVendas> historicoVendasList = new ArrayList<>();
+    private static Venda vendaEmAndamento;
 
    
     // Menu principal com as opções
@@ -466,25 +470,39 @@ public class Main{
 
     // Método finalizar venda
     public static void finalizarVenda() {
-       
         if (vendaEmAndamento == null || vendaEmAndamento.getProdutos().isEmpty()) {
             System.out.println("Nenhuma venda em andamento ou nenhum produto adicionado.");
             return;
         }
 
         vendaEmAndamento.calcularTotal();
-    
+
         System.out.println("\nResumo da Venda:");
         System.out.println("ID da Venda: " + vendaEmAndamento.getIdVenda());
         System.out.println("Data da Venda: " + vendaEmAndamento.getData());
         System.out.println("Valor Total: " + vendaEmAndamento.getValorTotal());
 
-        HistoricoCompras.adicionarCompra(vendaEmAndamento);
-        HistoricoVendas.adicionarVenda(vendaEmAndamento);
-        
+        // Encontrar o histórico de compras do cliente
+        HistoricoCompras historicoCompras = HistoricoCompras.consultarHistoricoCompras(vendaEmAndamento.getCliente(), historicosCompras);
+        if (historicoCompras == null) {
+            historicoCompras = new HistoricoCompras(vendaEmAndamento.getCliente());
+            historicosCompras.add(historicoCompras);
+        }
+        historicoCompras.adicionarCompra(vendaEmAndamento);
+
+        // Encontrar o histórico de vendas do caixa
+        HistoricoVendas historicoVendas = HistoricoVendas.consultarHistoricoVendas(vendaEmAndamento.getCaixa(), historicoVendasList);
+        if (historicoVendas == null) {
+            historicoVendas = new HistoricoVendas(vendaEmAndamento.getCaixa());
+            historicoVendasList.add(historicoVendas);
+        }
+        historicoVendas.adicionarVenda(vendaEmAndamento);
+
         vendaEmAndamento = null;
         System.out.println("Venda finalizada com sucesso!");
     }
+
+    
 
     // Menu Gerenciamento de estouqe
     public static void menuGerenciamentoEstoque() {
@@ -619,12 +637,13 @@ public class Main{
         System.out.println("\nProsuto removido com sucesso!");
     }
 
+    
     // Menu pedido de compra
     private static void menuPedidosCompra(){
-
+        
         Scanner scanner = new Scanner(System.in);
         int opcao;
-
+        
         do {
             System.out.print("\n--------- MENU PEDIDO DE COMPRA -----------\n\n" +
                              "1. Fazer pedido de nova compra\n" +
@@ -633,13 +652,13 @@ public class Main{
             
             opcao = scanner.nextInt();
             scanner.nextLine();
-
+            
             switch (opcao) {
                 case 1:
                     fazerPedidoCompra(scanner);
                     break;
                 case 2:
-                    System.out.println("\nVoltando ao Menu Principal...");
+                System.out.println("\nVoltando ao Menu Principal...");
                     break;
                 default:
                     System.out.println("\nOpção inválida. Tente novamente.");
@@ -651,13 +670,13 @@ public class Main{
     
     // Método fazer pedido de compra
     public static void fazerPedidoCompra(Scanner scanner) {
-
+        
         System.out.print("\nPedido de Compra\n");
         System.out.print("Digite o nome do fornecedor: ");
         String nomeConsulta = scanner.nextLine();
-
+        
         Fornecedor fornecedorConsultado = Fornecedor.consultarFornecedor(nomeConsulta);
-
+        
         if (fornecedorConsultado == null) {
             
             System.out.print("\nCadastro de novo Fornecedor\n");
@@ -694,7 +713,7 @@ public class Main{
         scanner.nextLine(); // Consumir a nova linha
         System.out.print("Data de entrega (dd/MM/yyyy): ");
         String dataEntregaStr = scanner.nextLine();
-
+        
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Date dataEntrega = null;
 
@@ -715,24 +734,24 @@ public class Main{
     }
 
     public static void menuHistoricoCompras(){
-
+        
         Scanner scanner = new Scanner(System.in);
         int opcao;
-
+        
         do {
             System.out.print("\n--------- MENU HISTÓRICO DE COMPRAS -----------\n\n" +
                              "1. Consultar historico de compras\n" +
                              "2. Voltar ao Menu Principal\n\n" +
                              "Escolha uma opção: ");
             
-            opcao = scanner.nextInt();
-            scanner.nextLine();
+                             opcao = scanner.nextInt();
+                             scanner.nextLine();
 
-            switch (opcao) {
+                             switch (opcao) {
                 case 1:
                     consultarHistoricoCompras(scanner);
                     break;
-                case 2:
+                    case 2:
                     System.out.println("\nVoltando ao Menu Principal...");
                     break;
                 default:
@@ -742,36 +761,118 @@ public class Main{
 
         scanner.close();
     }
+    
+    // Método consultar histórico de compras
+    public static void consultarHistoricoCompras(Scanner scanner) {
+        
+        System.out.println("Consulta de histórico de compras");
+        System.out.print("Digite o CPF do cliente: ");
+        String cpfConsulta = scanner.nextLine();
 
-    public static void consultarHistoricoCompras(Scanner scanner){
+        Cliente clienteConsultado = Cliente.consultarCliente(cpfConsulta);
 
+        if (clienteConsultado != null) {
+            HistoricoCompras historicoEncontrado = HistoricoCompras.consultarHistoricoCompras(clienteConsultado, historicosCompras);
+            if (historicoEncontrado != null) {
+                System.out.println("\nHistórico de Compras Encontrado:");
+                System.out.println("Cliente: " + historicoEncontrado.getCliente().getNome());
+                System.out.println("Número de Compras: " + historicoEncontrado.getCompras().size());
 
+                double valorTotalGasto = 0;
+                for (Venda venda : historicoEncontrado.getCompras()) {
+                    valorTotalGasto += venda.getValorTotal();
+                }
+                System.out.println("Valor Total Gasto: " + valorTotalGasto);
+            } else {
+                System.out.println("\nHistórico de Compras não encontrado para este cliente.");
+            }
+        } else {
+            System.out.println("\nCliente não encontrado.");
+        }
     }
+    
+    public static void menuHistoricoVendas(){
+        
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+        
+        do {
+            System.out.print("\n--------- MENU HISTORICO VENDAS -----------\n\n" +
+                             "1. Consultar historico de vendas\n" +
+                             "2. Voltar ao Menu Principal\n\n" +
+                             "Escolha uma opção: ");
+            
+                             opcao = scanner.nextInt();
+                             scanner.nextLine();
 
+                             switch (opcao) {
+                case 1:
+                    consultarHistoricoCompras(scanner);
+                    break;
+                    case 2:
+                    System.out.println("\nVoltando ao Menu Principal...");
+                    break;
+                default:
+                    System.out.println("\nOpcao invalida. Tente novamente.");
+            }
+        } while (opcao != 5);
+
+        scanner.close();
+    }
+    
+    // Método consultar histórico de compras
+    public static void consultarHistoricoVendas(Scanner scanner) {
+        
+        System.out.println("Consulta de histórico de vendas");
+        System.out.print("Digite o ID do caixa: ");
+        int idConsulta = scanner.nextInt();
+        scanner.nextLine(); // Consumir a nova linha
+
+        AtendenteCaixa caixaConsultado = AtendenteCaixa.consultarCaixa(idConsulta);
+
+        if (caixaConsultado != null) {
+            HistoricoVendas historicoEncontrado = HistoricoVendas.consultarHistoricoVendas(caixaConsultado, historicoVendasList);
+            if (historicoEncontrado != null) {
+                System.out.println("\nHistórico de Vendas Encontrado:");
+                System.out.println("Atendente caixa: " + historicoEncontrado.getCaixa().getNome());
+                System.out.println("Número de Vendas: " + historicoEncontrado.getVendas().size());
+
+                double valorTotalVendido = 0;
+                for (Venda venda : historicoEncontrado.getVendas()) {
+                    valorTotalVendido += venda.getValorTotal();
+                }
+                System.out.println("Valor Total Vendido: " + valorTotalVendido);
+            } else {
+                System.out.println("\nHistórico de Vendas não encontrado para este caixa.");
+            }
+        } else {
+            System.out.println("\nCaixa não encontrado.");
+        }
+    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcao;
-    
+        
         do {
             menuPrincipal();
             opcao = scanner.nextInt();
     
             switch (opcao) {
                 case 1:
-                    menuCadastroClientes();  
+                menuCadastroClientes();  
                     break;
-                case 2:
+                    case 2:
                     menuCadastroCaixas();
                     break;
                 case 3:
                     menuVendas();
                     break;
-                // case 4:
-                //     menuHistoricoCompras();
-                //     break;
-                // case 5:
-                //     menuHistoricoVendas();
-                //     break;
+                case 4:
+                    menuHistoricoCompras();
+                    break;
+                case 5:
+                    menuHistoricoVendas();
+                    break;
                 case 6:
                     menuGerenciamentoEstoque();
                     break;
