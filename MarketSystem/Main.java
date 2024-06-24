@@ -26,7 +26,7 @@ public class Main{
                                 "5. Histórico de Vendas\n" + //
                                 "6. Gerenciamento de Estoque\n" + //
                                 "7. Pedidos de Compra\n" + //
-                                "8. Sair /n"+
+                                "8. Sair \n"+
                                 "Escolha uma opcao: ");
     }
 
@@ -46,7 +46,7 @@ public class Main{
                              "Escolha uma opcao: ");
             
             opcao = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
             switch (opcao) {
                 case 1:
@@ -69,7 +69,6 @@ public class Main{
             }
         } while (opcao != 5);
 
-        scanner.close();
     }
 
     // Método cadastrar novo cliente
@@ -212,7 +211,6 @@ public class Main{
             }
         } while (opcao != 5);
 
-        scanner.close();
     }
 
     // Método cadastrar novo caixa
@@ -542,7 +540,6 @@ public class Main{
             }
         } while (opcao != 5);
 
-        scanner.close();
     }
 
     // Método cadastrar novo produto
@@ -665,7 +662,6 @@ public class Main{
             }
         } while (opcao != 5);
 
-        scanner.close();
     }
     
     // Método fazer pedido de compra
@@ -759,7 +755,6 @@ public class Main{
             }
         } while (opcao != 5);
 
-        scanner.close();
     }
     
     // Método consultar histórico de compras
@@ -850,6 +845,7 @@ public class Main{
         }
     }
     public static void main(String[] args) {
+        
         Scanner scanner = new Scanner(System.in);
         int opcao;
         
@@ -861,8 +857,8 @@ public class Main{
                 case 1:
                 menuCadastroClientes();  
                     break;
-                    case 2:
-                    menuCadastroCaixas();
+                case 2:
+                menuCadastroCaixas();
                     break;
                 case 3:
                     menuVendas();
@@ -889,5 +885,7 @@ public class Main{
     
         scanner.close();
     }
+
+    // Dando probelma pra voltar pro menu principal depois do menu de caixas
     
 }
